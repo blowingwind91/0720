@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phần Mềm Tính Thông Số & Dựng Form Áo</title>
+  <title>Phần Mềm Tính Thông Số Rập Áo Nữ</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
-    .container { max-width: 1000px; margin: auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    h1 { text-align: center; color: #2c3e50; }
-    .form-group { margin-bottom: 15px; }
-    label { display: inline-block; width: 180px; font-weight: bold; }
-    input, select { padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px; }
-    .grid-input { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #eef2f5; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-    button { background: #27ae60; color: white; border: none; padding: 12px 25px; font-size: 16px; border-radius: 5px; cursor: pointer; display: block; margin: 20px auto; }
-    button:hover { background: #219150; }
-    table tr td { padding: 6px 4px; border-bottom: 1px solid #eee; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
+    .container { max-width: 950px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    h1 { text-align: center; color: #2c3e50; font-size: 24px; margin-bottom: 25px; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 14px; color: #34495e; }
+    input, select { padding: 9px; width: 90%; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .grid-input { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #e9ecef; }
+    .btn-calc { background: #27ae60; color: white; border: none; padding: 14px 30px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; display: block; margin: 20px auto; transition: 0.2s; }
+    .btn-calc:hover { background: #219150; transform: translateY(-1px); }
+    table { width: 100%; text-align: left; border-collapse: collapse; margin-top: 10px; }
+    table tr td { padding: 8px 6px; border-bottom: 1px solid #eee; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -22,40 +23,150 @@
 <div class="container">
   <h1>✂️ TÍNH THÔNG SỐ RẬP ÁO NỮ (BASIC BODICE)</h1>
 
-  <div class="form-group" style="text-align: center;">
-    <label for="form-select">Chọn Form Dáng:</label>
-    <select id="form-select">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <label style="display:inline-block; margin-right: 10px;">Chọn Form Dáng:</label>
+    <select id="form-select" onchange="changeForm()" style="width: auto; display: inline-block;">
       <option value="can_ban">Áo Căn Bản (Basic Bodice)</option>
       <option value="om_body">Áo Ôm Body (Fitted Top)</option>
       <option value="somi_suong">Áo Sơ Mi Form Suông / Rộng</option>
     </select>
   </div>
 
-  <h3 id="form-title" style="text-align: center; color: #16a085;"></h3>
-
   <h3>1. Nhập Số Đo Cơ Thể (cm)</h3>
   <div class="grid-input">
     <div class="form-group"><label>Vòng Ngực:</label><input type="number" id="vong_nguc" value="84"></div>
-    <div class="form-group"><label>Vòng Eo:</label><input type="number" id="vong_eo" value="68"></div>
+    <div class="form-group"><label>Vòng Eo:</label><input type="number" id="vong_eo" value="70"></div>
     <div class="form-group"><label>Vòng Mông:</label><input type="number" id="vong_mong" value="90"></div>
     <div class="form-group"><label>Hạ Eo (TS):</label><input type="number" id="ha_eo" value="37"></div>
     <div class="form-group"><label>Rộng Vai:</label><input type="number" id="rong_vai" value="36"></div>
     <div class="form-group"><label>Kích Vai Sau (KVS):</label><input type="number" id="kich_vai_sau" value="32"></div>
     <div class="form-group"><label>Kích Vai Trước (KVT):</label><input type="number" id="kich_vai_truoc" value="31"></div>
-    <div class="form-group"><label>Khoảng Cách Ngực (KCN):</label><input type="number" id="khoang_cach_nguc" value="17"></div>
-    <div class="form-group"><label>Cử Động Ngực:</label><input type="number" id="cd_nguc" value="4"></div>
-    <div class="form-group"><label>Cử Động Eo:</label><input type="number" id="cd_eo" value="4"></div>
+    <div class="form-group"><label>Khoảng Cách Ngực (KCN):</label><input type="number" id="khoang_cach_nguc" value="15"></div>
+    <div class="form-group"><label>Cử Động Ngực:</label><input type="number" id="cd_nguc" value="2"></div>
+    <div class="form-group"><label>Cử Động Eo:</label><input type="number" id="cd_eo" value="2"></div>
   </div>
 
-  <button id="btn-calculate">📐 TÍNH THÔNG SỐ RẬP</button>
+  <button class="btn-calc" onclick="calculateBodice()">📐 TÍNH THÔNG SỐ RẬP</button>
 
   <h3>2. Bảng Kết Quả Chi Tiết Đường Dựng Rập</h3>
   <div id="results-container">
-    <p style="text-align: center; color: #7f8c8d;">Nhấn nút "TÍNH THÔNG SỐ RẬP" để hiển thị chi tiết các điểm vẽ.</p>
+    <p style="text-align: center; color: #7f8c8d; padding: 20px;">Nhấn nút "TÍNH THÔNG SỐ RẬP" để hiển thị chi tiết các điểm vẽ.</p>
   </div>
 </div>
 
-<script src="config.js"></script>
-<script src="script.js"></script>
+<script>
+function changeForm() {
+  const formVal = document.getElementById("form-select").value;
+  if (formVal === "can_ban") {
+    document.getElementById("cd_nguc").value = 4;
+    document.getElementById("cd_eo").value = 4;
+  } else if (formVal === "om_body") {
+    document.getElementById("cd_nguc").value = 0;
+    document.getElementById("cd_eo").value = 1;
+  } else if (formVal === "somi_suong") {
+    document.getElementById("cd_nguc").value = 8;
+    document.getElementById("cd_eo").value = 8;
+  }
+}
+
+function calculateBodice() {
+  const nguc = parseFloat(document.getElementById("vong_nguc").value || 0);
+  const eo = parseFloat(document.getElementById("vong_eo").value || 0);
+  const mong = parseFloat(document.getElementById("vong_mong").value || 0);
+  const haEo = parseFloat(document.getElementById("ha_eo").value || 0);
+  const vai = parseFloat(document.getElementById("rong_vai").value || 0);
+  const kvs = parseFloat(document.getElementById("kich_vai_sau").value || 0);
+  const kvt = parseFloat(document.getElementById("kich_vai_truoc").value || 0);
+  const kcn = parseFloat(document.getElementById("khoang_cach_nguc").value || 0);
+
+  const cdNguc = parseFloat(document.getElementById("cd_nguc").value || 0);
+  const cdEo = parseFloat(document.getElementById("cd_eo").value || 0);
+
+  if (!nguc || !eo || !haEo || !vai) {
+    alert("Vui lòng nhập đầy đủ các số đo!");
+    return;
+  }
+
+  // --- THÂN SAU (TS) ---
+  const ts_haSauCo = 2.0;
+  const ts_haXuoiVai = 4.5;
+  const ts_haSauNach = nguc / 4;
+  const ts_haEo = haEo;
+  const ts_rongCo = nguc / 12;
+  const ts_rongKichVai = kvs / 2;
+  const ts_rongNgangVai = vai / 2;
+  const ts_rongNgangNguc = (nguc + cdNguc) / 4 - 1.0;
+  const ts_rongNgangEo = (eo + cdEo) / 4 - 1.0 + 3.0;
+
+  const ts_chietVitrI = ts_rongNgangEo / 2;
+
+  // --- THÂN TRƯỚC (TT) ---
+  const tt_caoDauCo = 2.0;
+  const tt_haSauCo = (nguc / 12) + 0.5;
+  const tt_rongNgangCo = nguc / 12;
+  const tt_haSauNach = nguc / 4;
+  const tt_haEo = haEo;
+  const tt_rongKichVai = (kvs / 2) - 1.0;
+  const tt_rongNgangNguc = (nguc + cdNguc) / 4 + 1.0;
+  const tt_rongNgangEo = (eo + cdEo) / 4 + 1.0 + 3.0;
+  const tt_haXuoiVai = 6.5;
+  const tt_diemVaiG1 = (nguc / 20) + 0.5;
+  const tt_khoangCachNguc = kcn / 2;
+
+  const resultContainer = document.getElementById("results-container");
+  resultContainer.innerHTML = `
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+      
+      <!-- CỘT THÂN SAU -->
+      <div style="background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px; margin-top:0;">THÂN SAU (TS)</h3>
+        <table>
+          <tr><td><b>Hạ sâu cổ (A-B):</b></td><td>${ts_haSauCo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ xuôi vai (A-B1):</b></td><td>${ts_haXuoiVai.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ sâu nách (A-C):</b></td><td>${ts_haSauNach.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ eo TS (A-D):</b></td><td>${ts_haEo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng cổ (A-G):</b></td><td>${ts_rongCo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng kích vai TS (A-H):</b></td><td>${ts_rongKichVai.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng ngang vai (B1-L1):</b></td><td>${ts_rongNgangVai.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng ngang ngực (C-C1):</b></td><td><b style="color: #d35400;">${ts_rongNgangNguc.toFixed(1)} cm</b></td></tr>
+          <tr><td><b>Rộng ngang eo (D-D1):</b></td><td><b style="color: #d35400;">${ts_rongNgangEo.toFixed(1)} cm</b> (gồm 3cm ly)</td></tr>
+          <tr><td><b>Đường cong nách (I-M):</b></td><td>Vuông góc lên 5 cm</td></tr>
+          <tr><td><b>Đường ra nách (M):</b></td><td>Vuông góc sang phải 0.3 cm</td></tr>
+          <tr style="background: #edf2f7;"><td colspan="2"><b>Chiết Thân Sau:</b></td></tr>
+          <tr><td>- Vị trí chiết (D-R):</td><td>${ts_chietVitrI.toFixed(1)} cm</td></tr>
+          <tr><td>- Hạ đầu chiết (R1):</td><td>Từ C-C1 xuống 2 cm</td></tr>
+          <tr><td>- Rộng chiết (R3-R4):</td><td>Sang trái/phải 1.5 cm (Tổng 3cm)</td></tr>
+        </table>
+      </div>
+
+      <!-- CỘT THÂN TRƯỚC -->
+      <div style="background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h3 style="color: #2c3e50; border-bottom: 2px solid #e74c3c; padding-bottom: 8px; margin-top:0;">THÂN TRƯỚC (TT)</h3>
+        <table>
+          <tr><td><b>Cao đầu cổ (A-A1):</b></td><td>${tt_caoDauCo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ sâu cổ (A1-B):</b></td><td>${tt_haSauCo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng ngang cổ (A1-G):</b></td><td>${tt_rongNgangCo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Điểm cong cổ (A1-B1):</b></td><td>${tt_haSauCo.toFixed(1)} cm (cong G-B1-B)</td></tr>
+          <tr><td><b>Hạ sâu nách (A-C):</b></td><td>${tt_haSauNach.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ eo TT (A-D):</b></td><td>${tt_haEo.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng kích vai TT (A1-H):</b></td><td>${tt_rongKichVai.toFixed(1)} cm</td></tr>
+          <tr><td><b>Rộng ngang ngực (C-C2):</b></td><td><b style="color: #d35400;">${tt_rongNgangNguc.toFixed(1)} cm</b></td></tr>
+          <tr><td><b>Rộng ngang eo (D-D2):</b></td><td><b style="color: #d35400;">${tt_rongNgangEo.toFixed(1)} cm</b> (gồm 3cm ly)</td></tr>
+          <tr><td><b>Hạ xuôi vai TT (H-L):</b></td><td>${tt_haXuoiVai.toFixed(1)} cm</td></tr>
+          <tr><td><b>Điểm vai (G-G1):</b></td><td>${tt_diemVaiG1.toFixed(1)} cm</td></tr>
+          <tr><td><b>Hạ ngực (C-N):</b></td><td>Hạ xuống 1.5 cm</td></tr>
+          <tr><td><b>Khoảng cách ngực (N-N1):</b></td><td>${tt_khoangCachNguc.toFixed(1)} cm</td></tr>
+          <tr style="background: #edf2f7;"><td colspan="2"><b>Chiết Thân Trước:</b></td></tr>
+          <tr><td>- Trục chiết:</td><td>Từ N1 vuông góc xuống D-D2</td></tr>
+          <tr><td>- Đầu chiết trên (N1-R1):</td><td>Hạ xuống 2 cm</td></tr>
+          <tr><td>- Rộng chiết (R3-R4):</td><td>Sang trái/phải 1.5 cm (Tổng 3cm)</td></tr>
+        </table>
+      </div>
+
+    </div>
+  `;
+}
+</script>
+
 </body>
 </html>
