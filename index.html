@@ -1,29 +1,174 @@
-// DANH SÁCH DỮ LIỆU CÁC FORM ÁO
-// Bạn có thể dễ dàng thêm bớt form mới tại đây sau này
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Tính Thông Số & Dựng Form Áo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="p-4 md:p-8 text-slate-800">
 
-const FORM_CONFIGS = {
-    'can_ban': {
-        name: "Áo Căn Bản (Basic Bodice)",
-        cd_nguc: 4.0,  // Độ cử động ngực (cm)
-        cd_eo: 4.0,    // Độ cử động eo (cm)
-        chiet_vai: true,
-        img_form: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400",
-        img_rap: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bodice_pattern.svg/600px-Bodice_pattern.svg.png"
-    },
-    'om_body': {
-        name: "Áo Ôm Body (Fitted Top)",
-        cd_nguc: 0.0,
-        cd_eo: 1.0,
-        chiet_vai: true,
-        img_form: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400",
-        img_rap: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bodice_pattern.svg/600px-Bodice_pattern.svg.png"
-    },
-    'somi_suong': {
-        name: "Áo Sơ Mi Form Suông / Rộng",
-        cd_nguc: 8.0,
-        cd_eo: 8.0,
-        chiet_vai: false,
-        img_form: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=400",
-        img_rap: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bodice_pattern.svg/600px-Bodice_pattern.svg.png"
-    }
-};
+    <div class="max-w-6xl mx-auto">
+        <!-- HEADER -->
+        <header class="mb-8 text-center border-b pb-4 border-slate-200">
+            <h1 class="text-3xl font-bold text-slate-800 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-scissors text-indigo-600"></i>
+                HỆ THỐNG TÍNH RẬP & DỰNG FORM ÁO
+            </h1>
+            <p class="text-slate-500 mt-2">Nhập số đo cơ thể và chọn form dáng để xuất thông số chi tiết</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- CỘT TRÁI: NHẬP DỮ LIỆU & CHỌN FORM -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- 1. CHỌN FORM DÁNG ÁO -->
+                <div class="card p-6 border border-slate-100">
+                    <label class="block text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shirt text-indigo-500"></i> 1. CHỌN FORM DÁNG ÁO
+                    </label>
+                    <select id="formSelect" onchange="calculateSpecs()" class="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium">
+                        <!-- Options sẽ được tải động từ file config.js -->
+                    </select>
+                </div>
+
+                <!-- 2. NHẬP SỐ ĐO CƠ THỂ -->
+                <div class="card p-6 border border-slate-100">
+                    <h2 class="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-ruler-combined text-indigo-500"></i> 2. NHẬP SỐ ĐO CƠ THỂ (cm)
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Vòng Ngực</label>
+                            <input type="number" id="vong_nguc" value="82" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Vòng Eo</label>
+                            <input type="number" id="vong_eo" value="64" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Vòng Mông</label>
+                            <input type="number" id="vong_mong" value="88" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Hạ Eo Thân Sau</label>
+                            <input type="number" id="ha_eo" value="37" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Rộng Vai</label>
+                            <input type="number" id="rong_vai" value="36" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Khoảng Cách 2 Đầu Ngực</label>
+                            <input type="number" id="kcn" value="15" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Kích Vai Trước (KVT)</label>
+                            <input type="number" id="kvt" value="31" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-500">Kích Vai Sau (KVS)</label>
+                            <input type="number" id="kvs" value="33" oninput="calculateSpecs()" class="w-full mt-1 p-2 border rounded-md text-sm font-semibold">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CỘT PHẢI: KẾT QUẢ THÔNG SỐ & HÌNH ẢNH MINH HỌA -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- BẢNG TÍNH THÔNG SỐ -->
+                <div class="card p-6 border border-slate-100">
+                    <h2 class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
+                        <span><i class="fa-solid fa-calculator text-indigo-500 mr-2"></i> THÔNG SỐ CẮT RẬP CHI TIẾT</span>
+                        <span id="formBadge" class="bg-indigo-100 text-indigo-700 text-xs px-3 py-1 rounded-full font-bold">Form Căn Bản</span>
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                                <tr>
+                                    <th class="px-4 py-3">Chi tiết thông số</th>
+                                    <th class="px-4 py-3 text-center">Thân Trước (TT)</th>
+                                    <th class="px-4 py-3 text-center">Thân Sau (TS)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Rộng Ngực</td>
+                                    <td class="px-4 py-2.5 text-center font-bold text-indigo-600" id="res_nguc_tt">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-bold text-indigo-600" id="res_nguc_ts">0 cm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Rộng Eo (đã + ly)</td>
+                                    <td class="px-4 py-2.5 text-center font-bold text-indigo-600" id="res_eo_tt">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-bold text-indigo-600" id="res_eo_ts">0 cm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Hạ Nách / Hạ Ngực</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_nach_tt">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_nach_ts">0 cm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Rộng Cổ</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_co_tt">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_co_ts">0 cm</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Độ Rộng Chiết Vai / Ngực</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_chiet_tt">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold text-slate-400">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2.5 font-medium text-slate-800">Vị Trí Đỉnh Ngực ($N_1$)</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold" id="res_n1">0 cm</td>
+                                    <td class="px-4 py-2.5 text-center font-semibold text-slate-400">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- HÌNH ẢNH MINH HỌA -->
+                <div class="card p-6 border border-slate-100">
+                    <h2 class="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-image text-indigo-500"></i> MINH HỌA FORM DÁNG & BẢN RẬP MẪU
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border rounded-lg p-3 text-center bg-slate-50">
+                            <span class="text-xs font-bold text-slate-500 mb-2 block">Dáng Áo Mẫu</span>
+                            <div class="h-48 flex items-center justify-center bg-white rounded border overflow-hidden">
+                                <img id="imgForm" src="" alt="Form Dáng" class="h-full object-contain">
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-3 text-center bg-slate-50">
+                            <span class="text-xs font-bold text-slate-500 mb-2 block">Bản Vẽ Rập Chuẩn</span>
+                            <div class="h-48 flex items-center justify-center bg-white rounded border overflow-hidden">
+                                <img id="imgRap" src="" alt="Sơ Đồ Rập" class="h-full object-contain">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- NẠP DỮ LIỆU CẤU HÌNH VÀ SCRIPT XỬ LÝ -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
